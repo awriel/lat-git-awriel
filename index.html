@@ -3,26 +3,356 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Sederhana</title>
+    <title>Tokosek - Toko Online Sekolah</title>
     <style>
+        /* --- RESET & BASIC STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #1e3a8a; /* Biru khas sekolah */
+            --secondary-color: #f59e0b; /* Aksen kuning emas */
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --bg-light: #f3f4f6;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background-color: var(--primary-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-left: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--secondary-color);
+        }
+
+        /* --- SECTIONS GENERAL --- */
+        section {
+            padding: 5rem 5% 3rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 80vh;
+        }
+
+        .section-title {
             text-align: center;
-            margin-top: 50px;
-            background-color: #f4f4f4;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            color: var(--primary-color);
+            position: relative;
         }
-        h1 {
-            color: #333;
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            margin: 10px auto 0 auto;
+            border-radius: 2px;
         }
-        p {
-            color: #666;
+
+        /* --- BERANDA (HERO) SECTION --- */
+        #beranda {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            padding-top: 8rem;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #d97706;
+            transform: translateY(-2px);
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* --- PRODUK SECTION --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-info .btn {
+            margin-top: auto;
+            text-align: center;
+        }
+
+        /* --- KONTAK SECTION --- */
+        .contact-container {
+            display: flex;
+            gap: 3rem;
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+        }
+
+        .contact-form {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea {
+            padding: 0.7rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 120px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        /* --- RESPONSIVE BREAKPOINTS --- */
+        @media (max-width: 768px) {
+            #beranda {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 6rem;
+            }
+            .contact-container {
+                flex-direction: column;
+            }
+            .nav-menu {
+                font-size: 0.9rem;
+            }
+            .nav-item {
+                margin-left: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Selamat Datang!</h1>
-    <p>Ini adalah contoh halaman index.html yang sangat sederhana.</p>
-	<p>Ini adalah contoh commit kedua.</p>
-</body>
-</html>
 
+    <!-- HEADER / NAVIGATION -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">E-Smart Shop</div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#beranda" class="nav-link active">Beranda</a></li>
+                <li class="nav-item"><a href="#produk" class="nav-link">Produk</a></li>
+                <li class="nav-item"><a href="#kontak" class="nav-link">Kontak</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- BERANDA (HERO) SECTION -->
+    <section id="beranda">
+        <div class="hero-text">
+            <h1>Dukung Karya Sekolah, Belanja di Sini!</h1>
+            <p>Temukan berbagai kebutuhan sekolah, atribut resmi, hingga produk kreatif hasil karya siswa-siswi terbaik kami dengan kualitas terjamin.</p>
+            <a href="#produk" class="btn">Mulai Belanja</a>
+        </div>
+        <div class="hero-image">
+            <!-- Menggunakan placeholder gambar jika belum ada aset asli -->
+            <img src="https://placeholder.com" alt="Ilustrasi Toko Sekolah">
+        </div>
+    </section>
+
+    <!-- PRODUK SECTION -->
+    <section id="produk">
+        <h2 class="section-title">Produk Unggulan</h2>
+        <div class="product-grid">
+            
+            <!-- Produk 1 -->
+            <div class="product-card">
+                <div class="product-img">Seragam Batik</div>
+                <div class="product-info">
+                    <h3 class="product-title">Batik Resmi Sekolah</h3>
+                    <p class="product-price">Rp 120.000</p>
+                    <button class="btn buy-btn" data-product="Batik Resmi Sekolah">Beli Sekarang</button>
+                </div>
+            </div>
+
+            <!-- Produk 2 -->
+            <div class="product-card">
+                <div class="product-img">Atribut Topi & Dasi</div>
+                <div class="product-info">
+                    <h3 class="product-title">Paket Atribut Sekolah</h3>
+                    <p class="product-price">Rp 45.000</p>
+                    <button class="btn buy-btn" data-product="Paket Atribut Sekolah">Beli Sekarang</button>
+                </div>
+            </div>
+
+            <!-- Produk 3 -->
+            <div class="product-card">
+                <div class="product-img">Buku Agenda</div>
+                <div class="product-info">
+                    <h3 class="product-title">Buku Agenda Kustom Siswa</h3>
+                    <p class="product-price">Rp 35.000</p>
+                    <button class="btn buy-btn" data-product="Buku Agenda Kustom Siswa">Beli Sekarang</button>
+                </div>
+            </div>
+
+            <!-- Produk 4 -->
+            <div class="product-card">
